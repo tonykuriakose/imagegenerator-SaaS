@@ -1,10 +1,22 @@
 import React, { useContext } from 'react'
 import { assets } from '../assets/assets'
 import { delay, motion } from 'framer-motion'
-
+import { AppContext } from '../context/AppContext'
+import { useNavigate } from 'react-router-dom'
 
 const Header = () => {
 
+    const { user, setShowLogin } = useContext(AppContext)
+
+    const navigate = useNavigate()
+
+    const onClickHandler = () => {
+        if (user) {
+            navigate('/result')
+        } else {
+            setShowLogin(true)
+        }
+    }
 
     return (
         <motion.div
@@ -49,6 +61,7 @@ const Header = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ default: { duration: 0.5 }, opacity: { delay: 0.8, duration: 1 } }}
+                onClick={onClickHandler}
             >
                 Generate Images <img className='h-6' src={assets.star_group} alt="" />
             </motion.button>
@@ -59,7 +72,7 @@ const Header = () => {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1, duration: 1 }}
             >
-          {Array(6).fill('').map((item, index) => (
+                {Array(6).fill('').map((item, index) => (
                     <motion.img
                         className='rounded hover:scale-105 transition-all duration-300 cursor-pointer max-sm:w-10'
                         width={70}
