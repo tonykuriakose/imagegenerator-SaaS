@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { assets } from '../assets/assets'
+import { AppContext } from '../context/AppContext'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { motion } from 'framer-motion'
@@ -11,7 +12,7 @@ const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
- 
+    const { backendUrl, setShowLogin, setToken, setUser } = useContext(AppContext)
 
     const onSubmitHandler = async (e) => {
         e.preventDefault()
@@ -56,10 +57,10 @@ const Login = () => {
 
 
     useEffect(() => {
-    
+        // Disable scrolling on body when the login is open
         document.body.style.overflow = 'hidden';
 
-        
+        // Cleanup function to re-enable scrolling
         return () => {
             document.body.style.overflow = 'unset';
         };
@@ -72,7 +73,7 @@ const Login = () => {
                 transition={{ duration: 0.3 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-            > 
+            >
 
                 <h1 className='text-center text-2xl text-neutral-700 font-medium'>{state}</h1>
 
@@ -108,4 +109,4 @@ const Login = () => {
     )
 }
 
-export default Login;
+export default Login
